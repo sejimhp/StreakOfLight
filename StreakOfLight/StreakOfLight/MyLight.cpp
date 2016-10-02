@@ -25,18 +25,28 @@ void MyLight::update() {
 		speed_x = -speed_x;
 		points.push_front(p);
 	}
-	if (points.size() == 6)
-		points.pop_back();
+
+	//線の長さ
+	double sum = 2000;
+	for (int i = 0; i < points.size()-1; i++) {
+		Vec2 diff = points[i] - points[i + 1];
+		double len = sqrt(pow(diff.x, 2.0) + pow(diff.y, 2.0));
+
+		if (len > sum) {
+			sum /= sqrt(2);
+			points[i + 1].x = points[i].x > points[i+1].x ? points[i].x - sum : points[i].x + sum;
+			points[i + 1].y = points[i].y > points[i+1].y ? points[i].y - sum : points[i].y + sum;
+			while (i + 2 != points.size()) {
+				points.pop_back();
+			}
+		}
+		else {
+			sum -= len;
+		}
+	}
 }
 
 void MyLight::draw() {
-	//線の長さ
-	/*double line_len = 200;
-	for (int i = 0; i < points.size(); i++) {
-		if (i == points.size() - 1) {
-
-		}
-	}*/
 	for (int i = 0; i < points.size()-1; i++) {
 		Line(points[i], points[i+1]).draw();
 	}
