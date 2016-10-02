@@ -1,24 +1,43 @@
-# include "MyLight.h"
+﻿# include "MyLight.h"
 
 MyLight::MyLight() {
-	place = Vec2(500.0, 10.0);
-	dx = 10;
-	dy = 10;
+	points.push_front(Vec2(500.0, 10.0));
+	points.push_front(Vec2(500.0, 10.0));
+	speed_x = 5;
+	speed_y = 5;
 }
 
 void MyLight::update() {
-	place += Vec2(dx, dy);
-	player = Circle(place, 5);
-	if ((place.y < 0 || place.y >= Window::Height()) && (place.x < 0 || place.x >= Window::Width())) {
-		dy = -dy;
-		dx = -dx;
+	points[0] += Vec2(speed_x, speed_y);
+	player = Circle(points[0], 5);
+	
+	Vec2 p = points[0];
+	if ((p.y < 0 || p.y >= Window::Height()) && (p.x < 0 || p.x >= Window::Width())) {
+		speed_y = -speed_y;
+		speed_x = -speed_x;
+		points.push_front(p);
 	}
-	else if (place.y < 0 || place.y >= Window::Height())
-		dy = -dy;
-	else if (place.x < 0 || place.x >= Window::Width())
-		dx = -dx;
+	else if (p.y < 0 || p.y >= Window::Height()) {
+		speed_y = -speed_y;
+		points.push_front(p);
+	}
+	else if (p.x < 0 || p.x >= Window::Width()) {
+		speed_x = -speed_x;
+		points.push_front(p);
+	}
+	if (points.size() == 6)
+		points.pop_back();
 }
 
 void MyLight::draw() {
-	Circle(place, 3).draw();
+	//線の長さ
+	/*double line_len = 200;
+	for (int i = 0; i < points.size(); i++) {
+		if (i == points.size() - 1) {
+
+		}
+	}*/
+	for (int i = 0; i < points.size()-1; i++) {
+		Line(points[i], points[i+1]).draw();
+	}
 }

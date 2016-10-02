@@ -32,6 +32,6 @@ void Game::draw() {
 	}
 }
 
-void pur_graphics() {
+void Game::put_graphics() {
 
 }

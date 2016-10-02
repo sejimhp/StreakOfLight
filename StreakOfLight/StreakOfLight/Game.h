@@ -1,5 +1,7 @@
 ﻿#pragma once
 # include <Siv3D.hpp>
+# include <memory>
+# include <vector>
 
 # include "MyLight.h"
 
@@ -16,4 +18,6 @@ public:
 private:
 	std::shared_ptr<MyLight> light;
 	GAMESTATE gameState;
+	std::vector<std::shared_ptr<Rect>> rects;
+	std::vector<std::shared_ptr<Line>> lines;
 };
