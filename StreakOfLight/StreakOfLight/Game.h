@@ -15,9 +15,12 @@ public:
 
 	//図形を配置
 	void put_graphics();
+	void draw_graphics();
+
 private:
 	std::shared_ptr<MyLight> light;
 	GAMESTATE gameState;
-	std::vector<std::shared_ptr<Rect>> rects;
-	std::vector<std::shared_ptr<Line>> lines;
+
+	std::vector<Rect> rects;
+	std::vector<Line> lines;
 };

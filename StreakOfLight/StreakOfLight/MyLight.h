@@ -5,8 +5,10 @@
 class MyLight {
 public:
 	MyLight();
-	void update();
+	void update(std::vector<Rect>, std::vector<Line>);
 	void draw();
+
+	void collision_detection(std::vector<Rect>, std::vector<Line>);
 private:
 	//各点(始点を含める)
 	std::deque<Vec2> points;
