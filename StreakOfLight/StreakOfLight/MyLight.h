@@ -5,6 +5,7 @@
 class MyLight {
 public:
 	MyLight();
+	void init();
 	void update(std::vector<Rect>, std::vector<Line>);
 	void draw();
 

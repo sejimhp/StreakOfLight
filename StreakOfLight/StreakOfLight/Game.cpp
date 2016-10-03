@@ -23,8 +23,22 @@ void Game::update() {
 		if (light->get_clear_flag()) {
 			gameState = GAMESTATE::SCORE;
 		}
+		if (Input::KeySpace.clicked) {
+			rects.clear();
+			init();
+		}
 		break;
 	case GAMESTATE::SCORE :
+		if (Input::KeySpace.clicked) {
+			light->init();
+			rects.clear();
+			init();
+		}
+		if (Input::KeySpace.clicked) {
+			rects.clear();
+			init();
+			gameState = GAMESTATE::GAME;
+		}
 		break;
 	}
 }
@@ -52,10 +66,14 @@ void Game::put_graphics() {
 	{
 		mouse_start = Mouse::Pos();
 	}        
+	if (Input::MouseL.pressed) {
+		mouse_end = Mouse::Pos();
+	}
 	if (Input::MouseL.released)
 	{
 		mouse_end = Mouse::Pos();
 		rects.push_back(Rect(mouse_start, mouse_end - mouse_start));
+		mouse_start = mouse_end = Point(0, 0);
 	}
 }
 
@@ -65,4 +83,5 @@ void Game::draw_graphics() {
 	for (int i = 1; i < rects.size(); i++) {
 		rects[i].draw();
 	}
+	Rect(mouse_start, mouse_end - mouse_start).draw();
 }

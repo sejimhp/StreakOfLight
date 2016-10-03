@@ -9,6 +9,16 @@ MyLight::MyLight() {
 	clear_flag = false;
 }
 
+void MyLight::init() {
+	points.clear();
+	points.push_front(Vec2(100.0, 300.0));
+	points.push_front(Vec2(100.0, 300.0));
+	speed_x = 10;
+	speed_y = 10;
+	clear_flag = false;
+}
+
+
 void MyLight::update(std::vector<Rect> rects, std::vector<Line>lines){
 	points[0] += Vec2(speed_x, speed_y);
 
