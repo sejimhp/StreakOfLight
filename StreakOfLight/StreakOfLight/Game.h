@@ -8,6 +8,7 @@
 class Game {
 public:
 	Game();
+	void init();
 	enum GAMESTATE {START, GAME, SCORE};
 
 	void update();
@@ -23,4 +24,6 @@ private:
 
 	std::vector<Rect> rects;
 	std::vector<Line> lines;
+
+	Point mouse_start, mouse_end;
 };

@@ -8,6 +8,8 @@ public:
 	void update(std::vector<Rect>, std::vector<Line>);
 	void draw();
 
+	bool get_clear_flag() const { return clear_flag; }
+
 	void collision_detection(std::vector<Rect>, std::vector<Line>);
 private:
 	//各点(始点を含める)
@@ -20,4 +22,6 @@ private:
 	std::deque<Vec2> speeds;
 	//あたり判定用？
 	Circle player;
+
+	bool clear_flag;
 };

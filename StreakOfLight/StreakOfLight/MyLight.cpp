@@ -6,6 +6,7 @@ MyLight::MyLight() {
 	points.push_front(Vec2(100.0, 300.0));
 	speed_x = 10;
 	speed_y = 10;
+	clear_flag = false;
 }
 
 void MyLight::update(std::vector<Rect> rects, std::vector<Line>lines){
@@ -79,10 +80,12 @@ void MyLight::collision_detection(std::vector<Rect> rects, std::vector<Line>line
 			if (num == 0 || num == 2) {
 				speed_x = -speed_x; 
 				points.push_front(p);
+				if(i == 0)	clear_flag = true;
 			}
 			else { 
 				speed_y = -speed_y; 
 				points.push_front(p);
+				if(i == 0) clear_flag = true;
 			}
 		}
 	}

@@ -1,13 +1,16 @@
-# include "Game.h"
+﻿# include "Game.h"
 # include "MyLight.h"
 
 
 Game::Game() {
 	light = std::make_shared<MyLight>();
 	gameState = GAMESTATE::GAME;
-	rects.push_back(Rect(100, 100, 100, 100));
-	rects.push_back(Rect(500, 300, 100, 100));
-	rects.push_back(Rect(50, 250, 100, 100));
+	init();
+}
+
+void Game::init() {
+	rects.push_back(Rect(750, 0, 50, 50));
+	rects.push_back(Rect(50, 50, 750, 10));
 }
 
 void Game::update() {
@@ -17,6 +20,9 @@ void Game::update() {
 	case GAMESTATE::GAME :
 		put_graphics();
 		light->update(rects, lines);
+		if (light->get_clear_flag()) {
+			gameState = GAMESTATE::SCORE;
+		}
 		break;
 	case GAMESTATE::SCORE :
 		break;
@@ -24,6 +30,7 @@ void Game::update() {
 }
 
 void Game::draw() {
+	static Font font(20);
 	switch (gameState) {
 	case GAMESTATE::START :
 		break;
@@ -32,17 +39,30 @@ void Game::draw() {
 		light->draw();
 		break;
 	case GAMESTATE::SCORE :
+		draw_graphics();
+		light->draw();
+		Circle(400, 300, 150).draw(Palette::Orange);
+		font(L"クリアしたよ").drawCenter(400, 300);
 		break;
 	}
 }
 
 void Game::put_graphics() {
+	if (Input::MouseL.clicked)
+	{
+		mouse_start = Mouse::Pos();
+	}        
+	if (Input::MouseL.released)
+	{
+		mouse_end = Mouse::Pos();
+		rects.push_back(Rect(mouse_start, mouse_end - mouse_start));
+	}
 }
 
 
 void Game::draw_graphics() {
-
-	for (int i = 0; i < rects.size(); i++) {
+	rects[0].draw(Palette::Aqua);
+	for (int i = 1; i < rects.size(); i++) {
 		rects[i].draw();
 	}
 }
