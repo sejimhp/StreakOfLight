@@ -73,7 +73,10 @@ void Game::put_graphics() {
 	{
 		mouse_end = Mouse::Pos();
 		if (mouse_end.x < mouse_start.x) {
-			std::swap(mouse_start, mouse_end);
+			std::swap(mouse_start.x, mouse_end.x);
+		}
+		if (mouse_end.y < mouse_start.y) {
+			std::swap(mouse_start.y, mouse_end.y);
 		}
 		rects.push_back(Rect(mouse_start, mouse_end - mouse_start));
 		mouse_start = mouse_end = Point(0, 0);
