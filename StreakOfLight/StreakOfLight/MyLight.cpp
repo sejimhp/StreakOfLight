@@ -4,8 +4,8 @@
 MyLight::MyLight() {
 	points.push_front(Vec2(100.0, 300.0));
 	points.push_front(Vec2(100.0, 300.0));
-	speed_x = 10;
-	speed_y = 10;
+	speed_x = 2;
+	speed_y = 2;
 	clear_flag = false;
 }
 
@@ -13,33 +13,35 @@ void MyLight::init() {
 	points.clear();
 	points.push_front(Vec2(100.0, 300.0));
 	points.push_front(Vec2(100.0, 300.0));
-	speed_x = 10;
-	speed_y = 10;
+	speed_x = 2;
+	speed_y = 2;
 	clear_flag = false;
 }
 
 
 void MyLight::update(std::vector<Rect> rects, std::vector<Line>lines){
-	points[0] += Vec2(speed_x, speed_y);
+	for (int a = 0; a < 5; a++) {
+		points[0] += Vec2(speed_x, speed_y);
 
-	collision_detection(rects, lines);
+		collision_detection(rects, lines);
 
-	//線の長さ
-	double sum = 1000;
-	//一定の長さ以上で切る
-	for (int i = 0; i < points.size()-1; i++) {
-		Vec2 diff = points[i] - points[i + 1];
-		double len = sqrt(pow(diff.x, 2.0) + pow(diff.y, 2.0));
-		if (len > sum) {
-			sum /= sqrt(2);
-			points[i + 1].x = points[i].x > points[i+1].x ? points[i].x - sum : points[i].x + sum;
-			points[i + 1].y = points[i].y > points[i+1].y ? points[i].y - sum : points[i].y + sum;
-			while (i + 2 != points.size()) {
-				points.pop_back();
+		//線の長さ
+		double sum = 1000;
+		//一定の長さ以上で切る
+		for (int i = 0; i < points.size() - 1; i++) {
+			Vec2 diff = points[i] - points[i + 1];
+			double len = sqrt(pow(diff.x, 2.0) + pow(diff.y, 2.0));
+			if (len > sum) {
+				sum /= sqrt(2);
+				points[i + 1].x = points[i].x > points[i + 1].x ? points[i].x - sum : points[i].x + sum;
+				points[i + 1].y = points[i].y > points[i + 1].y ? points[i].y - sum : points[i].y + sum;
+				while (i + 2 != points.size()) {
+					points.pop_back();
+				}
 			}
-		}
-		else {
-			sum -= len;
+			else {
+				sum -= len;
+			}
 		}
 	}
 }
